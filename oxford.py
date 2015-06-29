@@ -26,19 +26,19 @@ import requests
 import click
 
 # Global variables
-CONFIG_FILE="~/.projectoxford.json"
+CONFIG_FILE=os.path.expanduser("~/.projectoxford.json")
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 # Load API Key from config file
 def load_config(fname):
     if os.path.isfile(fname):
-        with open(os.path.expanduser(fname), 'r') as f:
+        with open(fname, 'r') as f:
             return json.load(f)
     else:
         return {'apikeys':{}}
 
 def save_config(fname, config):
-     with open(os.path.expanduser(fname), 'w') as f:
+     with open(fname, 'w') as f:
         json.dump(config, f)
        
 # oxford is the command-line, it only has sub commands and two configuration options
@@ -49,7 +49,7 @@ def save_config(fname, config):
 def oxford(ctx, oxford_url):
     ctx.obj = load_config(CONFIG_FILE)
     ctx.obj['oxford_url'] = oxford_url
-   
+
 #
 # Face sub command: https://www.projectoxford.ai/doc/face/overview
 #
@@ -94,7 +94,6 @@ def detect(ctx, analyzesfacelandmarks, analyzesage, analyzesgender, analyzeshead
     'analyzesGender' : str(analyzesgender).lower(),
     'analyzesHeadPose' : str(analyzesheadpose).lower()
     }
-    print ctx.obj
     headers = {
     'Ocp-Apim-Subscription-Key' : ctx.obj['apikeys']['face']
     }
