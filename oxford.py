@@ -66,7 +66,7 @@ def face(ctx, apikey):
 @click.pass_context
 def face_api_key(ctx, apikey):
     config = load_config(CONFIG_FILE)
-    config['face'] = apikey
+    config['apikeys']['face'] = apikey
     save_config(CONFIG_FILE, config)
     
 # a function to resolve if the input is an image file or a url
