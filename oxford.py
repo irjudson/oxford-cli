@@ -7,6 +7,7 @@
 import uuid
 import datetime
 import os
+import os.path
 import shutil
 
 # Python 2 or 3 import for urlparse
@@ -29,12 +30,15 @@ CONFIG_FILE="~/.projectoxford.json"
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 # Load API Key from config file
-def load_config(filen):
-    with open(os.path.expanduser(filen), 'r') as f:
-        return json.load(f)
+def load_config(fname):
+    if os.path.isfile(fname):
+        with open(os.path.expanduser(fname), 'r') as f:
+            return json.load(f)
+    else:
+        return {}
 
-def save_config(filen, config):
-     with open(os.path.expanduser(CONFIG_FILE), 'w') as f:
+def save_config(fname, config):
+     with open(os.path.expanduser(fname), 'w') as f:
         json.dump(config, f)
        
 # oxford is the command-line, it only has sub commands and two configuration options
