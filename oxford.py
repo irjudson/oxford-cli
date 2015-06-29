@@ -35,7 +35,7 @@ def load_config(fname):
         with open(os.path.expanduser(fname), 'r') as f:
             return json.load(f)
     else:
-        return {}
+        return {'apikeys':{}}
 
 def save_config(fname, config):
      with open(os.path.expanduser(fname), 'w') as f:
